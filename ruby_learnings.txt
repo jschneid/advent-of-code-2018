@@ -1,0 +1,38 @@
+=== File I/O ===
+
+To iterate through each line of a file [day 1]:
+  File.readlines('input.txt').each do |line|
+
+To slurp each line of an entire file into an array [day 2 part 2]:
+  File.readlines('input.txt')
+
+
+=== Collections ===
+
+To get a shallow copy of a collection [day 3 part 2]:
+  my_items.dup
+
+To search a collection for something, then remove the match(es) from the collection [day 3 part 2]:
+  my_items.delete_if { |item| item.id == my_match_id }
+
+
+=== 2D Arrays ===
+
+To initialize a 2D array of size x,y with value v [day 3 part 1]:
+  grid = Array.new(x) { Array.new(y, v) }
+
+
+=== Hashes ===
+
+To check if a hash has a given key [day 1]:
+  my_hash.has_key?(key_to_check)
+or
+  my_hash.key?(key_to_check)
+
+
+=== Looping ===
+
+To iterate through each pair-combination of items from a collection (instead of nested looping) [day 2 part 2]:
+  my_array.combination(2) do |item1, item2|
+
+
