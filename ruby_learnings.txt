@@ -32,7 +32,35 @@ or
 
 === Looping ===
 
+To loop forever (instead of while(true)) [day 1]:
+  loop do
+
 To iterate through each pair-combination of items from a collection (instead of nested looping) [day 2 part 2]:
   my_array.combination(2) do |item1, item2|
 
+To iterate through *consecutive* pair-combinations of items from a collection [day 5 part 1]:
+  my_array.each_cons(2) do |pair|
 
+
+=== Comparisons ===
+
+To check if an item is nil [day 4 part 1]:
+  my_item.nil?
+
+To check if an item is 0 [day 5 part 1]:
+  my_item.zero?
+
+To compare case-insensitive string equality [day 5 part 1]:
+  my_string.casecmp(my_other_string).zero?
+
+
+=== String Manipulation ===
+
+To remove all instances of a substring from a string [day 5 part 1]:
+  shortened_string = my_string.gsub(my_substring, '')
+
+To case-insensitive remove all instances of a substring from a string [day 5 part 2]:
+  shortened_string = my_string.gsub(/#{my_substring}/i, '')
+
+To convert a string to an array (so that collection methods can be used on it) [day 5 part 1]:
+  my_string.split('')
