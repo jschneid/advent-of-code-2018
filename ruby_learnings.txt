@@ -15,6 +15,14 @@ To get a shallow copy of a collection [day 3 part 2]:
 To search a collection for something, then remove the match(es) from the collection [day 3 part 2]:
   my_items.delete_if { |item| item.id == my_match_id }
 
+Splat operator: Shove the values from an array into the individual arguments in a method call [day 6]:
+  def my_method(a, b, c) ... end
+  my_array = [10, 20, 30]
+  my_method(*my_array)
+
+Shorthand syntax for .map, to retrieve a single attribute from each item [day 6]:
+  my_array.map &:my_attribute
+
 
 === 2D Arrays ===
 
@@ -55,6 +63,9 @@ To compare case-insensitive string equality [day 5 part 1]:
 
 
 === String Manipulation ===
+
+To truncate a trailing newline character, if any [day 2 part 2]:
+  my_line.chomp
 
 To remove all instances of a substring from a string [day 5 part 1]:
   shortened_string = my_string.gsub(my_substring, '')
