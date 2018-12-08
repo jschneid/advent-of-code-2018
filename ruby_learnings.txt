@@ -48,6 +48,7 @@ To iterate through each pair-combination of items from a collection (instead of 
 
 To iterate through *consecutive* pair-combinations of items from a collection [day 5 part 1]:
   my_array.each_cons(2) do |pair|
+  # Do something with pair[0] and pair[1]
 
 
 === Comparisons ===
