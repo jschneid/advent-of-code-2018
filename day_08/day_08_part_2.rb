@@ -24,16 +24,20 @@ def process_node(input_queue)
   node
 end
 
-def walk_tree_sum_metadata(node)
-  children_metadata_sum = 0
-  node.child_nodes.each do |child_node|
-    children_metadata_sum += walk_tree_sum_metadata(child_node)
+def get_node_value(node)
+  return 0 if node.nil?
+  return node.metadata_sum if node.child_nodes.count.zero?
+
+  total_value = 0
+  node.metadata.each do |child_node_index|
+    child_node = node.child_nodes[child_node_index - 1]
+    total_value += get_node_value(child_node)
   end
-  node.metadata_sum + children_metadata_sum
+  total_value
 end
 
 input_queue = File.read('input.txt').split(' ')
 
 head_node = process_node(input_queue)
 
-p walk_tree_sum_metadata(head_node)
+p get_node_value(head_node)
