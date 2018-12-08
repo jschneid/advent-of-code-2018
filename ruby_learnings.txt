@@ -93,3 +93,6 @@ To case-insensitive remove all instances of a substring from a string [day 5 par
 
 To convert a string to an array (so that collection methods can be used on it) [day 5 part 1]:
   my_string.split('')
+
+To get the ASCII value of a character [day 7]:
+  my_char.ord
