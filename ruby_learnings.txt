@@ -6,6 +6,9 @@ To iterate through each line of a file [day 1]:
 To slurp each line of an entire file into an array [day 2 part 2]:
   File.readlines('input.txt')
 
+To slurp an entire file into a string [day 8]:
+  File.read('input.txt')
+
 
 === Collections ===
 
@@ -22,6 +25,9 @@ Splat operator: Shove the values from an array into the individual arguments in 
 
 Shorthand syntax for .map, to retrieve a single attribute from each item [day 6]:
   my_array.map &:my_attribute
+
+To remove all instances of a value from a collection [day 7]:
+  my_items.delete(value_to_delete)
 
 
 === 2D Arrays ===
