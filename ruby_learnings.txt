@@ -60,6 +60,12 @@ or
 To loop forever (instead of while(true)) [day 1]:
   loop do
 
+Traditional for loop [day 10]:
+  for x in min_x..max_x do
+
+Traditional while !(condition) loop [day 10]:
+  until condition
+
 To iterate through each pair-combination of items from a collection (instead of nested looping) [day 2 part 2]:
   my_array.combination(2) do |item1, item2|
 
