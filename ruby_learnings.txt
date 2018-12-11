@@ -60,8 +60,8 @@ or
 To loop forever (instead of while(true)) [day 1]:
   loop do
 
-Traditional for loop [day 10]:
-  for x in min_x..max_x do
+Traditional for loop [day 11]:
+  (min_x..max_x).each do |x|
 
 Traditional while !(condition) loop [day 10]:
   until condition
