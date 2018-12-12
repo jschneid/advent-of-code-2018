@@ -4,7 +4,7 @@ To iterate through each line of a file [day 1]:
   File.readlines('input.txt').each do |line|
 
 To slurp each line of an entire file into an array [day 2 part 2]:
-  File.readlines('input.txt')
+  my_array = File.readlines('input.txt')
 
 To slurp an entire file into a string [day 8]:
   File.read('input.txt')
@@ -102,3 +102,6 @@ To convert a string to an array (so that collection methods can be used on it) [
 
 To get the ASCII value of a character [day 7]:
   my_char.ord
+
+To get a substring starting with character x and continuing to the end:
+  my_string[x..-1]
