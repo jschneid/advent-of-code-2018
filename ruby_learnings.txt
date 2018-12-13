@@ -39,6 +39,12 @@ Simple queue: As stack (above) but use .shift to pop the first element [day 8]:
   a.push(4)   # [1, 2, 3, 4]
   a.shift  # returns 1; a is now [2, 3, 4]
 
+To sort a collection of custom objects [day 13]:
+  class Name
+    def <=>(other)
+      @lastname + @firstname <=> other.lastname + other.firstname
+    end
+  names = names.sort!
 
 
 === 2D Arrays ===
