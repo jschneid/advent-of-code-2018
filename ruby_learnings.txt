@@ -29,6 +29,12 @@ Shorthand syntax for .map, to retrieve a single attribute from each item [day 6]
 To remove all instances of a value from a collection [day 7]:
   my_items.delete(value_to_delete)
 
+To convert to a string (comma-separated):
+  my_items.join(', ')
+
+To convert to a string (no separator, all items directly mashed together):
+  my_items.join('')
+
 Simple stack: All collections support .push and .pop [day 8]:
   a = [1, 2, 3]
   a.push(4)   # [1, 2, 3, 4]
