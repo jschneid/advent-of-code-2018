@@ -1,10 +1,10 @@
 class GridCell
-  def initialize(x, y, character)
+  def initialize(x, y, character, elf_attack_power)
     @x = x
     @y = y
 
     if ['G', 'E'].include?(character)
-      @unit = Unit.new(character)
+      @unit = Unit.new(character, elf_attack_power)
       @is_wall = false
     elsif character == '.'
       @is_wall = false
@@ -32,10 +32,10 @@ class GridCell
 end
 
 class Unit
-  def initialize(type)
+  def initialize(type, elf_attack_power)
     @hp = 200
-    @attack_power = 3
     @type = type
+    @attack_power = (type == 'G' ? 3 : elf_attack_power)
     @already_moved_this_round = false
   end
 
@@ -66,11 +66,11 @@ def draw_battlefield(battlefield)
   puts
 end
 
-def read_battlefield_from_input_file
+def read_battlefield_from_input_file(elf_attack_power)
   battlefield = []
   File.readlines('input.txt').each_with_index do |line, y|
     line.chomp.split('').each_with_index do |character, x|
-      battlefield << GridCell.new(x, y, character)
+      battlefield << GridCell.new(x, y, character, elf_attack_power)
     end
   end
   battlefield
@@ -148,14 +148,18 @@ end
 def do_attack(battlefield, square)
   enemy_square_to_attack = enemy_square_to_attack(battlefield, square)
 
-  return if enemy_square_to_attack.nil?
+  return false if enemy_square_to_attack.nil?
 
   enemy_square_to_attack.unit.hp -= square.unit.attack_power
 
   if enemy_square_to_attack.unit.hp <= 0
     p "Unit #{enemy_square_to_attack.unit.type} at #{enemy_square_to_attack.x},#{enemy_square_to_attack.y} died!"
+
+    return true if enemy_square_to_attack.unit.type == 'E'
+
     enemy_square_to_attack.unit = nil
   end
+  false
 end
 
 def enemy_square_to_attack(battlefield, square)
@@ -200,47 +204,63 @@ def unit_types_alive(battlefield)
   unit_types_alive
 end
 
-battlefield = read_battlefield_from_input_file
 
-draw_battlefield(battlefield)
+elf_attack_power = 3
+elf_died = false
 
-rounds_complete = 0
-until unit_types_alive(battlefield).count == 1
+loop do
+  elf_attack_power += 1
+  p "Increased elf attack power to #{elf_attack_power}"
+  battlefield = read_battlefield_from_input_file(elf_attack_power)
 
-  p "=== Round #{rounds_complete + 1} ==="
+  draw_battlefield(battlefield)
 
-  round_ended_early = false
-  at_least_one_move_performed = false
+  rounds_complete = 0
+  until unit_types_alive(battlefield).count == 1
 
-  squares_with_units = battlefield.reject { |square| square.unit.nil? }
+    p "=== Round #{rounds_complete + 1} ==="
 
-  squares_with_units.each { |square| square.unit.already_moved_this_round = false }
+    round_ended_early = false
+    at_least_one_move_performed = false
 
-  squares_with_units.each do |square|
-    next if square.unit.nil?
-    next if square.unit.already_moved_this_round
+    squares_with_units = battlefield.reject { |square| square.unit.nil? }
 
-    if unit_types_alive(battlefield).count == 1
-      round_ended_early = true
-      break
+    squares_with_units.each { |square| square.unit.already_moved_this_round = false }
+
+    squares_with_units.each do |square|
+      next if square.unit.nil?
+      next if square.unit.already_moved_this_round
+
+      if unit_types_alive(battlefield).count == 1
+        round_ended_early = true
+        break
+      end
+
+      square_moved_to = do_move(battlefield, square)
+      elf_died = do_attack(battlefield, square_moved_to)
+
+      break if elf_died
+
+      square_moved_to.unit.already_moved_this_round = true
+      at_least_one_move_performed = true if square != square_moved_to
     end
 
-    square_moved_to = do_move(battlefield, square)
-    do_attack(battlefield, square_moved_to)
-    square_moved_to.unit.already_moved_this_round = true
-    at_least_one_move_performed = true if square != square_moved_to
+    break if elf_died
+
+    draw_battlefield(battlefield) if at_least_one_move_performed
+
+    break if round_ended_early
+    rounds_complete += 1
   end
 
-  draw_battlefield(battlefield) if at_least_one_move_performed
+  next if elf_died
 
-  break if round_ended_early
-  rounds_complete += 1
+  squares_with_units = battlefield.reject { |square| square.unit.nil? }
+  total_hp_left = 0
+  squares_with_units.each do |square|
+    total_hp_left += square.unit.hp
+  end
+
+  p rounds_complete * total_hp_left
+  break
 end
-
-squares_with_units = battlefield.reject { |square| square.unit.nil? }
-total_hp_left = 0
-squares_with_units.each do |square|
-  total_hp_left += square.unit.hp
-end
-
-p rounds_complete * total_hp_left
